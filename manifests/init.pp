@@ -207,10 +207,10 @@ class apache (
       }
       'gentoo': {
         $docroot              = '/var/www'
-        $pidfile              = '${APACHE_PID_FILE}'
+        $pidfile              = '/run/apache2.pid'
         $error_log            = 'error.log'
         $error_documents_path = '/usr/share/apache2/error'
-        $scriptalias          = '/var/www/cgi-bin' #??
+        $scriptalias          = '/var/www/localhost/cgi-bin'
         $access_log_file      = 'access.log'
       }
       default: {
