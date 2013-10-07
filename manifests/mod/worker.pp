@@ -57,6 +57,7 @@ class apache::mod::worker (
         ensure => present,
       }
     }
+    'gentoo': {}
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }
