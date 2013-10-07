@@ -205,6 +205,14 @@ class apache (
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
       }
+      'gentoo': {
+        $docroot              = '/var/www'
+        $pidfile              = '${APACHE_PID_FILE}'
+        $error_log            = 'error.log'
+        $error_documents_path = '/usr/share/apache2/error'
+        $scriptalias          = '/var/www/cgi-bin' #??
+        $access_log_file      = 'access.log'
+      }
       default: {
         fail("Unsupported osfamily ${::osfamily}")
       }
