@@ -145,6 +145,7 @@ class apache::params {
     $suphp_addhandler  = 'x-httpd-php'
     $suphp_engine      = 'off'
     $suphp_configpath  = '/etc/php5/apache2'
+    $mod_packages     = {}
     $mod_libs         = {
       'php5' => 'libphp5.so',
     }
