@@ -146,6 +146,16 @@ class apache::params {
     $suphp_engine      = 'off'
     $suphp_configpath  = '/etc/php5/apache2'
     $mod_packages     = {}
+    $modules          = [
+      'actions', 'alias', 'auth_basic', 'authn_alias', 'authn_anon', 'authn_dbm',
+      'authn_default', 'authn_file', 'authz_dbm', 'authz_default', 'authz_groupfile',
+      'authz_host', 'authz_owner', 'authz_user', 'autoindex', 'cache', 'cgi',
+      'cgid', 'dav', 'dav_fs', 'dav_lock', 'deflate', 'dir', 'disk_cache', 'env',
+      'expires', 'ext_filter', 'file_cache', 'filter', 'headers', 'include',
+      'info', 'log_config', 'logio', 'mem_cache', 'mime', 'mime_magic', 'negotiation',
+      'rewrite', 'setenvif', 'speling', 'status', 'unique_id', 'userdir', 'usertrack',
+      'vhost_alias',
+    ]
     $mod_libs         = {
       'php5' => 'libphp5.so',
     }
