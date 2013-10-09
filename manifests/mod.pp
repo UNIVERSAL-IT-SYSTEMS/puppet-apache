@@ -40,14 +40,6 @@ define apache::mod (
     }
   }
 
-  if $::operatingsystem == 'Gentoo' {
-    portage::makeconf { 'apache2_modules':
-      content => $apache2_modules,
-      before  => File["${mod_dir}/${mod}.load"]
-      require => Package['httpd'],
-    }
-  }
-
   file { "${mod}.load":
     ensure  => file,
     path    => "${mod_dir}/${mod}.load",

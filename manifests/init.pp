@@ -52,6 +52,13 @@ class apache (
   $package_ensure       = 'installed',
 ) inherits apache::params {
 
+  if $::operatingsystem == 'gentoo' {
+    portage::makeconf { 'apache2_modules':
+      content => $apache::params::apache2_modules,
+      notify  => Package['httpd'],
+    }
+  }
+
   package { 'httpd':
     ensure => $package_ensure,
     name   => $apache::params::apache_name,
