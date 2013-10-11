@@ -52,17 +52,22 @@ class apache (
   $package_ensure       = 'installed',
 ) inherits apache::params {
 
-  if $::operatingsystem == 'gentoo' {
-    portage::makeconf { 'apache2_modules':
-      content => $apache::params::apache2_modules,
-      notify  => Package['httpd'],
-    }
-  }
 
   package { 'httpd':
     ensure => $package_ensure,
     name   => $apache::params::apache_name,
     notify => Class['Apache::Service'],
+  }
+
+  if $::operatingsystem == 'gentoo' {
+    file { [
+      '/etc/apache2/modules.d/.keep_www-servers_apache-2',
+      '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
+    ]:
+      ensure  => absent,
+      require => Package['httpd'],
+      force   => true,
+    }
   }
 
   validate_bool($default_vhost)
