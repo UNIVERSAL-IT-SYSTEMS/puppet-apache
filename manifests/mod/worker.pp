@@ -57,12 +57,7 @@ class apache::mod::worker (
         ensure => present,
       }
     }
-    'gentoo': {
-      portage::makeconf { 'apache2_mpms':
-        content => $apache::mpm_module,
-        notify  => Package['httpd'],
-      }
-    }
+    'gentoo': {}
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }

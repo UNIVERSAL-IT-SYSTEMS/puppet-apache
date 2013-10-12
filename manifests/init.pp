@@ -59,16 +59,6 @@ class apache (
     notify => Class['Apache::Service'],
   }
 
-  if $::operatingsystem == 'gentoo' {
-    file { [
-      '/etc/apache2/modules.d/.keep_www-servers_apache-2',
-      '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
-    ]:
-      ensure  => absent,
-      require => Package['httpd'],
-    }
-  }
-
   validate_bool($default_vhost)
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
@@ -217,12 +207,28 @@ class apache (
         $access_log_file      = 'access_log'
       }
       'gentoo': {
-        $docroot              = '/var/www'
+        $docroot              = '/var/www/localhost/htdocs'
         $pidfile              = '/run/apache2.pid'
         $error_log            = 'error.log'
         $error_documents_path = '/usr/share/apache2/error'
         $scriptalias          = '/var/www/localhost/cgi-bin'
         $access_log_file      = 'access.log'
+
+        portage::makeconf { 'apache2_mpms':
+          content => $mpm_module,
+          notify  => Package['httpd'],
+        }
+        portage::makeconf { 'apache2_modules':
+          content => $default_mods,
+          notify  => Package['httpd'],
+        }
+        file { [
+          '/etc/apache2/modules.d/.keep_www-servers_apache-2',
+          '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
+        ]:
+          ensure  => absent,
+          require => Package['httpd'],
+        }
       }
       default: {
         fail("Unsupported osfamily ${::osfamily}")

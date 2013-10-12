@@ -9,12 +9,6 @@ class apache::default_mods (
     'redhat': {
       apache::mod { 'log_config': }
     }
-    'gentoo': {
-      portage::makeconf { 'apache2_modules':
-        content => $mods,
-        notify  => Package['httpd'],
-      }
-    }
     default: {}
   }
 
