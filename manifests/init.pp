@@ -60,10 +60,15 @@ class apache (
   }
 
   if $::operatingsystem == 'gentoo' {
-    file { [
-      '/etc/apache2/modules.d/.keep_www-servers_apache-2',
-      '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
-    ]:
+    notify { 'about to remove the bitches':
+      require => Package['httpd'],
+    }
+    file { '/etc/apache2/modules.d/.keep_www-servers_apache-2':
+      ensure  => absent,
+      require => Package['httpd'],
+      force   => true,
+    }
+    file { '/etc/apache2/vhosts.d/.keep_www-servers_apache-2':
       ensure  => absent,
       require => Package['httpd'],
       force   => true,
