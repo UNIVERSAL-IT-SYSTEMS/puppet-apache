@@ -36,6 +36,7 @@ class apache::params {
     $user                 = 'apache'
     $group                = 'apache'
     $apache_name          = 'httpd'
+    $service_name         = 'httpd'
     $httpd_dir            = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
@@ -83,6 +84,7 @@ class apache::params {
     $user             = 'www-data'
     $group            = 'www-data'
     $apache_name      = 'apache2'
+    $service_name     = 'apache2'
     $httpd_dir        = '/etc/apache2'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
@@ -127,6 +129,7 @@ class apache::params {
     $user             = 'apache'
     $group            = 'apache'
     $apache_name      = 'www-servers/apache'
+    $service_name     = 'apache2'
     $httpd_dir        = '/etc/apache2'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"

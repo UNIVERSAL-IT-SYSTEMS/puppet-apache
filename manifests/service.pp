@@ -17,6 +17,7 @@
 #
 #
 class apache::service (
+  $service_name   = $apache::service_name,
   $service_enable = true,
   $service_ensure = 'running',
 ) {
@@ -24,7 +25,7 @@ class apache::service (
 
   service { 'httpd':
     ensure => $service_ensure,
-    name   => $apache::apache_name,
+    name   => $service_name,
     enable => $service_enable,
   }
 }
