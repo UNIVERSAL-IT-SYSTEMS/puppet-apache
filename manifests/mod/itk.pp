@@ -46,6 +46,7 @@ class apache::mod::itk (
         ensure => present,
       }
     }
+    'gentoo' : {}
     default: {
       fail("Unsupported osfamily ${::osfamily}")
     }

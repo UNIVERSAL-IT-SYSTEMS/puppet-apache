@@ -22,6 +22,7 @@ class apache (
   $default_ssl_ca       = undef,
   $default_ssl_crl_path = undef,
   $default_ssl_crl      = undef,
+  $ip                   = undef,
   $service_enable       = true,
   $service_ensure       = 'running',
   $purge_configs        = true,
@@ -51,6 +52,7 @@ class apache (
   $server_signature     = 'On',
   $package_ensure       = 'installed',
 ) inherits apache::params {
+
 
   package { 'httpd':
     ensure => $package_ensure,
@@ -205,6 +207,30 @@ class apache (
         $scriptalias          = '/var/www/cgi-bin'
         $access_log_file      = 'access_log'
       }
+      'gentoo': {
+        $docroot              = '/var/www/localhost/htdocs'
+        $pidfile              = '/run/apache2.pid'
+        $error_log            = 'error.log'
+        $error_documents_path = '/usr/share/apache2/error'
+        $scriptalias          = '/var/www/localhost/cgi-bin'
+        $access_log_file      = 'access.log'
+
+        portage::makeconf { 'apache2_mpms':
+          content => $mpm_module,
+          notify  => Package['httpd'],
+        }
+        portage::makeconf { 'apache2_modules':
+          content => $default_mods,
+          notify  => Package['httpd'],
+        }
+        file { [
+          '/etc/apache2/modules.d/.keep_www-servers_apache-2',
+          '/etc/apache2/vhosts.d/.keep_www-servers_apache-2'
+        ]:
+          ensure  => absent,
+          require => Package['httpd'],
+        }
+      }
       default: {
         fail("Unsupported osfamily ${::osfamily}")
       }
@@ -255,6 +281,7 @@ class apache (
         serveradmin     => $serveradmin,
         access_log_file => $access_log_file,
         priority        => '15',
+        ip              => $ip,
       }
     }
     if $default_ssl_vhost {
@@ -266,6 +293,7 @@ class apache (
         serveradmin     => $serveradmin,
         access_log_file => "ssl_${access_log_file}",
         priority        => '15',
+        ip              => $ip,
       }
     }
   }

@@ -36,6 +36,7 @@ class apache::params {
     $user                 = 'apache'
     $group                = 'apache'
     $apache_name          = 'httpd'
+    $service_name         = 'httpd'
     $httpd_dir            = '/etc/httpd'
     $conf_dir             = "${httpd_dir}/conf"
     $confd_dir            = "${httpd_dir}/conf.d"
@@ -86,6 +87,7 @@ class apache::params {
     $user             = 'www-data'
     $group            = 'www-data'
     $apache_name      = 'apache2'
+    $service_name     = 'apache2'
     $httpd_dir        = '/etc/apache2'
     $conf_dir         = $httpd_dir
     $confd_dir        = "${httpd_dir}/conf.d"
@@ -129,6 +131,37 @@ class apache::params {
     $keepalive         = 'Off'
     $keepalive_timeout = 15
     $fastcgi_lib_path  = '/var/lib/apache2/fastcgi'
+  } elsif $::osfamily == 'Gentoo' {
+    $user             = 'apache'
+    $group            = 'apache'
+    $apache_name      = 'www-servers/apache'
+    $service_name     = 'apache2'
+    $httpd_dir        = '/etc/apache2'
+    $conf_dir         = $httpd_dir
+    $confd_dir        = "${httpd_dir}/conf.d"
+    $mod_dir          = "${httpd_dir}/modules.d"
+    $vhost_dir        = "${httpd_dir}/vhosts.d"
+    $conf_file        = 'httpd.conf'
+    $ports_file       = "${conf_dir}/ports.conf"
+    $logroot          = '/var/log/apache2'
+    $lib_path         = '/usr/lib/apache2/modules'
+    $mpm_module       = 'worker'
+    $default_ssl_cert = '/etc/ssl/apache2/server.crt'
+    $default_ssl_key  = '/etc/ssl/apache2/server.key'
+    $ssl_certs_dir    = '/etc/ssl/certs'
+    $passenger_root   = '/usr'
+    $passenger_ruby   = '/usr/bin/ruby'
+    $suphp_addhandler  = 'x-httpd-php'
+    $suphp_engine      = 'off'
+    $suphp_configpath  = '/etc/php5/apache2'
+    $mod_packages     = {}
+    $mod_libs         = {
+      'php5' => 'libphp5.so',
+    }
+    $conf_template     = 'apache/httpd.conf.erb'
+    $keepalive         = 'Off'
+    $keepalive_timeout = 15
+    $fastcgi_lib_path  = '' #???
   } else {
     fail("Class['apache::params']: Unsupported osfamily: ${::osfamily}")
   }

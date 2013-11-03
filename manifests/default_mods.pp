@@ -11,7 +11,6 @@ class apache::default_mods (
     }
     default: {}
   }
-  apache::mod { 'authz_host': }
 
   # The rest of the modules only get loaded if we want all modules enabled
   if $all {
@@ -66,6 +65,7 @@ class apache::default_mods (
     apache::mod { 'authn_file': }
     apache::mod { 'authz_default': }
     apache::mod { 'authz_groupfile': }
+    apache::mod { 'authz_host': }
     apache::mod { 'authz_user': }
     apache::mod { 'env': }
   } elsif $mods {

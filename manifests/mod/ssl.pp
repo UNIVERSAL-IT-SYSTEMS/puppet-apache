@@ -4,10 +4,12 @@ class apache::mod::ssl (
   $session_cache = $::osfamily ? {
     'debian' => '${APACHE_RUN_DIR}/ssl_scache(512000)',
     'redhat' => '/var/cache/mod_ssl/scache(512000)',
+    'gentoo' => '/var/run/ssl_scache(512000)',
   }
   $ssl_mutex = $::osfamily ? {
     'debian' => 'file:${APACHE_RUN_DIR}/ssl_mutex',
     'redhat' => 'default',
+    'gentoo' => 'file:/var/run/ssl_mutex',
   }
   apache::mod { 'ssl': }
 
